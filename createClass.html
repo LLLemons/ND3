@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/sprite.css">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="js/html5shiv.min.js">
+	<script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+	<script src="./js/getCommon.js"></script>
+	<title>创建班级</title>
+</head>
+
+<body>
+	<!-- 容器star -->
+	<div class="wrapper">
+
+		<!-- 顶部导航star -->
+		<!-- 顶部导航end -->
+		<!-- 主体内容 -->
+		<main class="container main clearfix" id="content">
+			<!-- 侧栏 -->
+			<!-- 右边内容 -->
+			<section class="content" id="subContent">
+				<!-- 顶部 -->
+				<div class="content__top clearfix">
+					<div class="content__title font14px fl">我的班级</div>
+					<div class="btns fr">
+						<a class="button fl" href="index.html" >返回上一级</a>
+					</div>
+				</div>
+				<!-- 内容区 -->
+				<div class="subContent">
+					<div class="subContent__form font14px col-666">
+						<div class="classForm__title">尊敬的<span class="col-3ba8f0">老师（刘老师）</span>,请填写班级信息</div>
+						<form class="classForm">
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">学校</label>
+								<input class="classForm__input fl" maxlength="80" id="school" type="text" placeholder="福建师范大学">
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">
+									<span class="required">*</span>
+									学段
+								</label>
+								<div class="select fl">
+									<div class="select__hd down classForm__input" data-name="schoolSection">请选择学段</div>
+									<ul class="select_list">
+										<li class="select__item">小学</li>
+										<li class="select__item">初中</li>
+										<li class="select__item">高中</li>
+										<li class="select__item">大学</li>
+									</ul>
+								</div>
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">
+									<span class="required">*</span>
+									年级
+								</label>
+								<div class="select fl">
+									<div class="select__hd down classForm__input" data-name="grade">请选择年级</div>
+									<ul class="select_list">
+										<li class="select__item">一年级</li>
+										<li class="select__item">二年级</li>
+									</ul>
+								</div>
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="className" class="fl">
+									<span class="required">*</span>
+									班级名
+								</label>
+								<input id="className" type="text" maxlength="20" class="classForm__input fl" placeholder="请输入班级名称，限20个字符，不支持输入_和%">
+								<span class="name__error fl">不支持输入_和%</span>
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">
+									类型
+								</label>
+								<div class="radio__list fl clearfix">
+									<div class="radio___item fl">
+										<input class="input__radio" id="radio__admin" value="行政班" type="radio" checked name="radio__type">
+										<label class="radio__label" for="radio__admin">行政班</label>
+									</div>
+									<div class="radio___item fl">
+										<input class="input__radio" id="radio__teach" value="教学班" type="radio" name="radio__type">
+										<label class="radio__label" for="radio__teach">教学班</label>
+									</div>
+								</div>
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">
+									退出权限设置
+								</label>
+								<div class="radio__list fl clearfix">
+									<div class="radio___item fl">
+										<input class="input__radio" id="radio__allow" type="radio" value="允许退出" checked name="radio__permission">
+										<label class="radio__label" for="radio__allow">允许退出</label>
+									</div>
+									<div class="radio___item fl">
+										<input class="input__radio" id="radio__review" type="radio" value="通过班级管理员审核后退出" name="radio__permission">
+										<label class="radio__label" for="radio__review">通过班级管理员审核后退出</label>
+									</div>
+									<div class="radio___item fl">
+										<input class="input__radio" id="radio__forbidden" type="radio" value="禁止退出" name="radio__permission">
+										<label class="radio__label" for="radio__forbidden">禁止退出</label>
+									</div>
+								</div>
+							</div>
+							<div class="classForm__item clearfix">
+								<label class="classForm__label fl" for="school" class="fl">&nbsp;</label>
+								<div class="button button-submit fl">提交</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+	<!-- 容器end -->
+
+	<script src="js/createClass.js"></script>
+</body>
+
+</html>

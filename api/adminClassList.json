@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "data": [{
+      "id": 0,
+      "grade": "高中-2013级",
+      "class": "三年二班",
+      "head_teacher": "田小雨",
+      "count": 33,
+      "type": "行政班",
+      "isHot": true
+    },
+    {
+      "id": 1,
+      "grade": "高中-2014级",
+      "class": "二年二班",
+      "head_teacher": "刘大大",
+      "count": 50,
+      "type": "行政班",
+      "isHot": false
+    },
+    {
+      "id": 2,
+      "grade": "高中-2015级",
+      "class": "二年四班",
+      "head_teacher": "刘小小",
+      "count": 60,
+      "type": "行政班",
+      "isHot": false
+    }
+  ]
+}
