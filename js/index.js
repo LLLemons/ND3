@@ -4,23 +4,18 @@ $(function () {
     ADMIN_URL = './../api/adminClassList.json',
     TEACH_URL = './../api/teachClassList.json',
     DETAIL_URL = './../class.html',
-    ADMIN = '1',
-    TEACH = '2'
+    ADMIN = '1', // 1代表行政班
+    TEACH = '2' // 2代表教学班
 
   // 获取行政班
   getList(ADMIN)
   // 获取教学班
   getList(TEACH)
 
-  // 前往详情页
-  $('.classCard__list').on('click',function (e) {
-    console.log(e);
-    // window.location.href = DETAIL_URL + '?id'
-   })
-
   /**
-  * 获取列表
-  */
+   * 获取列表
+   * @param {String} type
+   */
   function getList(type) {
     // 1代表行政班，2表示教学班
     var url = '',
@@ -37,12 +32,14 @@ $(function () {
       // 将缓存中的数据和请求中的数据中结合
       var allData = data.concat(dataLocal)
       // 渲染列表
-      var list = getListTemplate(allData)
-      renderList(list, type)
+      renderList(allData, type)
      }, 'json' )
   }
+
   /**
    * 从localStorage中获取数据
+   * @param {String} type
+   * @return {Array} 返回一个数组
    */
   function getDataFromStorage(type) {
     if(type === ADMIN) {
@@ -51,6 +48,7 @@ $(function () {
       type = '教学班'
     }
     var dataLocal = JSON.parse(window.localStorage.getItem('formInfo'))
+    // 如果localStorage里面没有数据，返回一个空数组
     if (!dataLocal) {
       return []
     }
@@ -72,47 +70,23 @@ $(function () {
     })
     return newData
   }
+
   /**
    * 渲染列表
+   * @param {Array} data
+   * @param {String} type
    */
-  function renderList(list,type) {
+  function renderList(data,type) {
     var parent = ''
     if (type === ADMIN) {
       parent = ADMIN_ID
     } else {
       parent = TEACH_ID
     }
+    var obj = {
+      data: data
+    }
+    var list = template("card",obj)
     $('#'+parent).html(list)
-  }
-  /**
-   * 获取列表模板
-   */
-  function getListTemplate(data) {
-    var list = data.map(function (item) {
-      var template =
-        `<li class="classCard__item card mgb-20 mgr-20 clearfix" data-id="${item.id}">
-          <div class="sprite icon_hot card__hot ${item.isHot?'show':''}"></div>
-          <div class="classCover sprite icon_cover mgr-20 fl"></div>
-          <dl class="classInfo lineheight24px col-333">
-            <dt class="fw-bold">${item.grade}</dt>
-            <dd class="classInfo__item">
-              <span class="col-999">班级：</span>
-              <span>${item.class}</span>
-            </dd>
-            <dd class="classInfo__item">
-              <span class="col-999">班主任：</span>
-              <span class="fw-bold">${item.head_teacher}</span>
-            </dd>
-            <dd class="classInfo__item">
-              <span class="col-999">学生：</span>
-              <span>${item.count}人</span>
-            </dd>
-          </dl>
-          <!-- 标签 -->
-          <span class="classCard__tag">${item.type}</span>
-        </li>`
-      return template
-    })
-    return list
   }
 })

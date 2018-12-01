@@ -48,25 +48,29 @@ $(function () {
     } else {
       alert('请完成所有必填项')
     }
-   })
+  })
 
 
   // 封装模拟select
   function getSelect($ele, type) {
     console.log($ele);
-    $ele.parent().find('.select_list').addClass('show')
+    $ele.parent().find('.select_list').show()
     $ele.removeClass('down').addClass('up')
     $ele.parent().find('.select_list').on('click', function (e) {
       // 获取当前点击的对象的值
       var target = $(e.target).html()
       formData[type] = target
       $ele.html(target)
-      $ele.parent().find('.select_list').removeClass('show')
+      $ele.parent().find('.select_list').hide()
       $ele.addClass('down').removeClass('up')
     })
+    $ele.parent().find('.select_list').on('mouseleave', function () {
+      $(this).hide()
+      $ele.removeClass('up').addClass('down')
+     })
   }
 
-  // 匹配正则
+  // 匹配正则 不含 _ 和 %
   function isMatches(str) {
     var pattern = /^((?!_|%).)*$/
     return pattern.test(str);

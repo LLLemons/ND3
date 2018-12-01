@@ -8,8 +8,10 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/sprite.css">
 	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="common/siderBar/index.css">
+	<link rel="stylesheet" href="common/header/index.css">
 	<link rel="stylesheet" href="css/index.css">
-	<link rel="stylesheet" href="js/html5shiv.min.js">
+	<link rel="stylesheet" href="lib/js/html5shiv.min.js">
 	<script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
 	<script src="./js/getCommon.js"></script>
 	<title>福建省教育信息统一平台</title>
@@ -22,7 +24,7 @@
 		<!-- 顶部导航star -->
 		<!-- 顶部导航end -->
 		<!-- 主体内容 -->
-		<main class="container main clearfix" id="content">
+		<div class="container main clearfix" id="content">
 			<!-- 侧栏 -->
 			<!-- 右边内容 -->
 			<section class="content" id="subContent">
@@ -30,7 +32,7 @@
 				<div class="content__top clearfix">
 					<div class="content__title font14px fl">我的班级</div>
 					<div class="btns fr">
-						<div class="button fl">返回上一级</div>
+						<a class="button fl" href="index.html">返回上一级</a>
 					</div>
 				</div>
 				<!-- 内容区 -->
@@ -45,61 +47,67 @@
 						</div>
 					</div>
 					<div class="class__content">
-						<div class="kindTab clearfix font14px col-666">
-							<div class="kindTab__item kindTab__item--current fl">所有老师(10)</div>
-							<div class="kindTab__item fl">所有学生(10)</div>
-							<div class="kindTab__item fl">所有家长(10)</div>
-						</div>
+						<ul class="kindTab clearfix font14px col-666">
+							<li class="kindTab__item kindTab__item--current fl" data-flag="teacher">所有老师(10)</li>
+							<li class="kindTab__item fl" data-flag="student">所有学生(10)</li>
+							<li class="kindTab__item fl" data-flag="parent">所有家长(10)</li>
+						</ul>
 						<ul class="kind__list">
-							<li class="kindCard card">
-								<div class="tag__list">
-									<img class="king__avatar" src="./images/bg.png" alt="头像">
-									<ul class="mainTag__list clearfix">
-										<li class="mainTag__item font12px">生物老师</li>
-										<li class="mainTag__item font12px bgc-fa4b5b">班主任</li>
-									</ul>
-									<ul class="function__list clearfix">
-										<li class="function__tag font12px bgc-fa4b5b fl">班主任</li>
-										<li class="function__tag font12px fl">生物老师</li>
-										<li class="function__tag font12px fl">地理</li>
-										<li class="function__tag font12px fl">信息与技术</li>
-										<li class="function__tag font12px fl">地理</li>
-										<li class="function__tag font12px fl">历史</li>
-										<li class="function__tag font12px fl">语文</li>
-										<li class="function__tag font12px fl">地理</li>
-										<li class="function__tag font12px fl">信息与技术</li>
-									</ul>
-								</div>
-								<div class="16px col-333 fw-bold ta-center lineheight35px">刘汇</div>
-							</li>
-							<li class="kindCard card">
-								<div class="tag__list">
-									<img class="king__avatar" src="./images/bg.png" alt="头像">
-									<ul class="mainTag__list">
-										<li class="mainTag__item font12px">生物老师</li>
-										<li class="mainTag__item font12px bgc-fa4b5b">班主任</li>
-									</ul>
-								</div>
-								<div class="16px col-333 fw-bold ta-center lineheight35px">刘汇</div>
-							</li>
-							<li class="kindCard card">
-								<div class="tag__list">
-									<img class="king__avatar" src="./images/bg.png" alt="头像">
-									<ul class="mainTag__list">
-										<li class="mainTag__item font12px">英语老师</li>
-										<li class="mainTag__item font12px bgc-f96543">管理员</li>
-									</ul>
-								</div>
-								<div class="16px col-333 fw-bold ta-center lineheight35px">刘大大</div>
-							</li>
+							<!-- todo -->
 						</ul>
 					</div>
 				</div>
 	</div>
 	</section>
-	</main>
+	</d>
 	</div>
 	<!-- 容器end -->
+
+	<script src="lib/js/template-web.js"></script>
+	<script src="js/class.js"></script>
+	<script id="card" type="text/html">
+		{{if !data.length}}
+			<li>
+				<img class="none__img" src="./images/null.png" alt="没有数据的图片">
+			</li>
+		{{/if}}
+		{{if data.length}}
+			{{each data}}
+				<li class="kindCard card">
+					<div class="tag__list">
+						<img class="king__avatar" src="./images/bg.png" alt="头像">
+						{{if $value.function.length <= 1}}
+							<ul class="mainTag__list clearfix">
+								{{each $value.function}}
+									<li class="mainTag__item font12px">{{$value}}</li>
+								{{/each}}
+								{{if $value.head_teacher}}
+									<li class="mainTag__item font12px bgc-fa4b5b">班主任</li>
+								{{/if}}
+								{{if $value.manager}}
+									<li class="mainTag__item font12px bgc-f96543">管理员</li>
+								{{/if}}
+							</ul>
+						{{/if}}
+						{{if $value.function.length > 1}}
+							<ul class="function__list clearfix">
+								{{if $value.head_teacher}}
+									<li class="function__tag font12px bgc-fa4b5b fl">班主任</li>
+								{{/if}}
+								{{if $value.manager}}
+									<li class="function__tag font12px bgc-f96543 fl">管理员</li>
+								{{/if}}
+								{{each $value.function}}
+									<li class="function__tag font12px fl">{{$value}}</li>
+								{{/each}}
+							</ul>
+						{{/if}}
+					</div>
+					<div class="16px col-333 fw-bold ta-center lineheight35px">{{$value.name}}</div>
+				</li>
+			{{/each}}
+		{{/if}}
+	</script>
 </body>
 
 </html>

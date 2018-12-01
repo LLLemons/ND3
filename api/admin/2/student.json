@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "name": "周学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  },
+  {
+    "id": 1,
+    "name": "吴学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  },
+  {
+    "id": 2,
+    "name": "郑学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  },
+  {
+    "id": 3,
+    "name": "冯学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  },
+  {
+    "id": 4,
+    "name": "褚学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  },
+  {
+    "id": 5,
+    "name": "卫学生" ,
+    "head_teacher": 0,
+    "manager": 0,
+    "function": []
+  }
+]
