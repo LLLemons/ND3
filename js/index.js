@@ -57,7 +57,7 @@ $(function () {
     dataLocal.forEach(function (item) {
       if(item.type === type) {
         var obj = {
-          id: 3,
+          id: 2,
           grade: item.schoolSection,
           class: item.grade,
           head_teacher: '刘汇',
