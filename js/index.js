@@ -1,38 +1,52 @@
 $(function () {
-  var ADMIN_ID = 'administrative',
-    TEACH_ID = 'teachClass',
-    ADMIN_URL = './../api/adminClassList.json',
-    TEACH_URL = './../api/teachClassList.json',
-    DETAIL_URL = './../class.html',
-    ADMIN = '1', // 1代表行政班
-    TEACH = '2' // 2代表教学班
 
-  // 获取行政班
-  getList(ADMIN)
-  // 获取教学班
-  getList(TEACH)
+  function Widget(options) {
+    var defaults = {
+      AMIN_ID: 'administrative',
+      TEACH_ID: 'teachClass',
+      ADMIN_URL: './../api/adminClassList.json',
+      TEACH_URL: './../api/teachClassList.json',
+      DEFAULT_URL: './../class.html',
+      ADMIN: 'admin',
+      TEACH: 'teach'
+    }
+    this.state =extend(defaults, options)
+    function extend(options) {
+      for(var key in options) {
+        defaults[key] = options[key]
+      }
+      return defaults
+    }
+  }
+
+  /**
+   * 初始化界面
+   * @param {String} type admin代表行政班，teach表示教学班
+   */
+  Widget.prototype.initLayout = function (type) {
+    this.getList(type)
+  }
 
   /**
    * 获取列表
-   * @param {String} type
+   * @param {String} type admin代表行政班，teach表示教学班
    */
-  function getList(type) {
-    // 1代表行政班，2表示教学班
-    var url = '',
-      that = this
-    if( type === ADMIN ) {
-      url = ADMIN_URL
+  Widget.prototype.getList = function (type) {
+    var url = ''
+    var that = this
+    if( type === this.state.ADMIN ) {
+      url = this.state.ADMIN_URL
     } else {
-      url = TEACH_URL
+      url = this.state.TEACH_URL
     }
     $.get( url, function ( res ) {
       var data = res.data
       // 从缓存中读取数据
-      var dataLocal = getDataFromStorage(type)
+      var dataLocal = that.getDataFromStorage(type)
       // 将缓存中的数据和请求中的数据中结合
       var allData = data.concat(dataLocal)
       // 渲染列表
-      renderList(allData, type)
+      that.renderList(allData, type)
      }, 'json' )
   }
 
@@ -41,8 +55,8 @@ $(function () {
    * @param {String} type
    * @return {Array} 返回一个数组
    */
-  function getDataFromStorage(type) {
-    if(type === ADMIN) {
+  Widget.prototype.getDataFromStorage = function (type) {
+    if(type === this.state.ADMIN) {
       type = '行政班'
     }else {
       type = '教学班'
@@ -76,12 +90,13 @@ $(function () {
    * @param {Array} data
    * @param {String} type
    */
-  function renderList(data,type) {
-    var parent = ''
-    if (type === ADMIN) {
-      parent = ADMIN_ID
+  Widget.prototype.renderList = function (data, type) {
+    var parent = '',
+     that = this
+    if (type === this.state.ADMIN) {
+      parent = this.state.AMIN_ID
     } else {
-      parent = TEACH_ID
+      parent = this.state.TEACH_ID
     }
     var obj = {
       data: data
@@ -93,16 +108,26 @@ $(function () {
     $('.classCard__item').on('click', function () {
       var id = $(this).data('id')
       var type = $(this).data('type')
-      toDetail(id, type)
+      that.toDetail(id, type)
     })
   }
 
   /**
    * 前往详情页
-   * @param {Number} id
-   * @param {String} type
+   * @param {String} id
+   * @param {String} type 行政班还是教学班
    */
-  function toDetail(id, type) {
-    window.location.href = "./class.html?id=" + id +"&type=" + type
+  Widget.prototype.toDetail = function (id, type) {
+    var DEFAULT_URL = this.state.DEFAULT_URL
+    window.location.href = DEFAULT_URL+'?id=' + id +'&type=' + encodeURI(type)
   }
+
+  // 实例化行政班
+  var admin = new Widget()
+  admin.initLayout('admin')
+
+  // 实例化教学班
+  var teach = new Widget()
+  teach.initLayout('teach')
+
 })
