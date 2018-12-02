@@ -37,42 +37,45 @@
 				</div>
 				<!-- 内容区 -->
 				<div class="subContent">
-					<div class="class_title font20px col-333 fw-bold">
-						折纸兴趣班
-						<div class="search clearfix mgt-30">
-							<input class="search__input fl" type="text" placeholder="快捷查找">
-							<div class="button search__button fr">
-								<span class="search__icon sprite icon_search_white fl"></span>
-							</div>
+					<div class="search clearfix mgt-30">
+						<input class="search__input fl" type="text" placeholder="快捷查找">
+						<div class="button search__button fr">
+							<span class="search__icon sprite icon_search_white fl"></span>
 						</div>
 					</div>
-					<div class="class__content">
-						<ul class="kindTab clearfix font14px col-666">
-							<li class="kindTab__item kindTab__item--current fl" data-flag="teacher">所有老师(10)</li>
-							<li class="kindTab__item fl" data-flag="student">所有学生(10)</li>
-							<li class="kindTab__item fl" data-flag="parent">所有家长(10)</li>
-						</ul>
-						<ul class="kind__list">
-							<!-- todo -->
-						</ul>
-					</div>
+					<div class="render"></div>
 				</div>
-	</div>
-	</section>
-	</d>
+		</div>
+		</section>
+		</d>
 	</div>
 	<!-- 容器end -->
 
 	<script src="lib/js/template-web.js"></script>
 	<script src="js/class.js"></script>
+	<script id="class_content" type="text/html">
+		<div class="class_title font20px col-333 fw-bold">
+			{{data.className}}
+		</div>
+		<div class="class__content">
+			<ul class="kindTab clearfix font14px col-666">
+				<li class="kindTab__item fl {{type==='teacher'?'kindTab__item--current':''}}" data-flag="teacher">所有老师({{data.teacher_count}})</li>
+				<li class="kindTab__item fl {{type==='student'?'kindTab__item--current':''}}" data-flag="student">所有学生({{data.student_count}})</li>
+				<li class="kindTab__item fl {{type==='parent'?'kindTab__item--current':''}}" data-flag="parent">所有家长({{data.parent_count}})</li>
+			</ul>
+			<ul class="kind__list">
+				{{include 'card' data}}
+			</ul>
+		</div>
+	</script>
 	<script id="card" type="text/html">
-		{{if !data.length}}
+		{{if !list.length}}
 			<li>
 				<img class="none__img" src="./images/null.png" alt="没有数据的图片">
 			</li>
 		{{/if}}
-		{{if data.length}}
-			{{each data}}
+		{{if list.length}}
+			{{each list}}
 				<li class="kindCard card">
 					<div class="tag__list">
 						<img class="king__avatar" src="./images/bg.png" alt="头像">
@@ -103,7 +106,7 @@
 							</ul>
 						{{/if}}
 					</div>
-					<div class="16px col-333 fw-bold ta-center lineheight35px">{{$value.name}}</div>
+					<div class="16px col-333 fw-bold ta-center lineheight35px">{{$value.name[0]}}</div>
 				</li>
 			{{/each}}
 		{{/if}}

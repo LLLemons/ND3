@@ -1,0 +1,52 @@
+{
+  "success": 1,
+  "data": {
+    "className": "素描兴趣班",
+    "teacher_count": 6,
+    "student_count": 6,
+    "parent_count": 6,
+    "list": [{
+        "id": 0,
+        "name": ["周老师","zhanglaoshi","zls"],
+        "head_teacher": 0,
+        "manager": 1,
+        "function": ["生物老师"]
+      },
+      {
+        "id": 1,
+        "name": ["李老师","lilaoshi","las"],
+        "head_teacher": 1,
+        "manager": 0,
+        "function": ["生物老师"]
+      },
+      {
+        "id": 2,
+        "name": ["王五","wangwu","ww"],
+        "head_teacher": 0,
+        "manager": 0,
+        "function": ["生物老师", "信息技术", "地理"]
+      },
+      {
+        "id": 3,
+        "name": ["赵六","zhaoliu","zl"],
+        "head_teacher": 0,
+        "manager": 0,
+        "function": ["生物老师", "信息技术", "地理"]
+      },
+      {
+        "id": 4,
+        "name": ["韩信","hanxin","hx"],
+        "head_teacher": 0,
+        "manager": 0,
+        "function": ["生物老师", "信息技术", "地理"]
+      },
+      {
+        "id": 5,
+        "name": ["周瑜","zhouyu","zy"],
+        "head_teacher": 0,
+        "manager": 0,
+        "function": ["生物老师", "信息技术", "地理"]
+      }
+    ]
+  }
+}

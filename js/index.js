@@ -88,5 +88,21 @@ $(function () {
     }
     var list = template("card",obj)
     $('#'+parent).html(list)
+
+    // 注册事件 为item添加点击事件，前往详情页
+    $('.classCard__item').on('click', function () {
+      var id = $(this).data('id')
+      var type = $(this).data('type')
+      toDetail(id, type)
+    })
+  }
+
+  /**
+   * 前往详情页
+   * @param {Number} id
+   * @param {String} type
+   */
+  function toDetail(id, type) {
+    window.location.href = "./class.html?id=" + id +"&type=" + type
   }
 })

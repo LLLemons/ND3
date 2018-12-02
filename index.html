@@ -64,7 +64,7 @@
 	<script src="js/index.js"> </script>
 	<script id="card" type="text/html">
 		{{each data}}
-			<li class="classCard__item card mgb-20 mgr-20 clearfix" onclick="toDetail({{$value.id}},'{{$value.type}}')">
+			<li class="classCard__item card mgb-20 mgr-20 clearfix" data-id="{{$value.id}}" data-type="{{$value.type}}">
 				<div class="sprite icon_hot card__hot ${item.isHot?'show':''}"></div>
 				<div class="classCover sprite icon_cover mgr-20 fl"></div>
 				<dl class="classInfo lineheight24px col-333">
@@ -88,13 +88,6 @@
 		{{/each}}
 
 
-	</script>
-
-	<script>
-		function toDetail(id,type) {
-			// 前往详情页
-			window.location.href = "./class.html?id=" + id +"&type=" + type
-		}
 	</script>
 
 </body>
