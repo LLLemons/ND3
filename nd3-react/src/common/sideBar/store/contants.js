@@ -1,0 +1,1 @@
+export const LIST = 'sideBar/sideBar_list'

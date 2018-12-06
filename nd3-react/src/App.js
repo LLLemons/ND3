@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component,Fragment } from 'react'
+import { Provider } from "react-redux"
+import store from './store/'
+import Header from './common/header'
+import SideBar from './common/sideBar'
+import {  ResetStyle, BaseStyle, SpriteStyle } from './globalStyle'
+import {  Main } from './style'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Fragment>
+        <ResetStyle/>
+        <BaseStyle/>
+        <SpriteStyle/>
+        <Provider store={store}>
+          <Header></Header>
+          <Main className='container clearfix'>
+            <SideBar></SideBar>
+          </Main>
+        </Provider>
+      </Fragment>
+
     );
   }
 }

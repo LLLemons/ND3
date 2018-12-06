@@ -1,0 +1,1 @@
+export const MainNavList = 'header/main_nav_list'
