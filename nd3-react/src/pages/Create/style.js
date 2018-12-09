@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 export const FormWrapper = styled.div`
-  margin-top: 20px;
 `
 export const Title = styled.div`
   line-height: 54px;
@@ -40,6 +39,16 @@ export const Require = styled.span`
 export const Select = styled.div`
   height: 36px;
   position: relative;
+`
+export const SelectHead = styled.div`
+  position: relative;
+  cursor: pointer;
+  width: 400px;
+	height: 36px;
+	padding: 0 11px;
+	line-height: 36px;
+	box-sizing: border-box;
+  border: 1px solid #ddd;
   &::after {
     content: '';
     position: absolute;
@@ -59,16 +68,6 @@ export const Select = styled.div`
 	  border-bottom: 6px solid #3ba8f0;
   }
 `
-export const SelectHead = styled.div`
-  position: relative;
-  cursor: pointer;
-  width: 400px;
-	height: 36px;
-	padding: 0 11px;
-	line-height: 36px;
-	box-sizing: border-box;
-  border: 1px solid #ddd;
-`
 export const SelectList = styled.ul`
   position: absolute;
   left: 0;
@@ -81,6 +80,9 @@ export const SelectList = styled.ul`
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   display: none;
+  &.show {
+    display: block;
+  }
 `
 export const SelectItem = styled.li`
   line-height: 26px;
@@ -94,45 +96,33 @@ export const ErrorSpan = styled.span`
   line-height: 36px;
   margin-left: 10px;
   display: none;
+  &.show {
+    display: block
+  }
 `
 export const RadioList = styled.ul`
   line-height: 36px;
 `
 export const RadioItem = styled.li`
+  min-width: 85px;
   margin-right: 20px;
 `
 export const Radio = styled.input`
-  display: none;
-  width: 400px;
-	height: 36px;
-	padding: 0 11px;
-	line-height: 36px;
-	box-sizing: border-box;
-  border: 1px solid #ddd;
-  &:checked+.radio__label::before {
-    background-color: #3ba8f0;
+    -webkit-appearance:none;
+    height: 11px;
+    width: 11px;
+    background-color: #fff;
     box-shadow: 0 0 0 2px #fff,
-                0 0 0 3px #3ba8f0;
-  }
+                0 0 0 3px #bbb;
+    border-radius: 50%;
+    outline: none;
+    transition: 0.3s all ease-in-out;
+    &:checked{
+      background-color: #3BA8F0;
+      box-shadow: 0 0 0 2px #fff,
+                  0 0 0 3px #3ba8f0;
+}
 `
 export const RadioLabel = styled.label`
-  display: inline-block;
-  vertical-align: middle;
-  min-width: 56px;
-  position: relative;
-  padding-left: 26px;
-  cursor: pointer;
-  &::before {
-    content:'';
-	position: absolute;
-	width: 11px;
-	height: 11px;
-	left: 0;
-	top: 12px;
-	border-radius: 50%;
-	background-origin: content-box;
-	background-color: #fff;
-	box-shadow: 0 0 0 2px #fff,
-							0 0 0 3px #bbb;
-  }
+  margin-left: 10px;
 `
