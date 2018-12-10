@@ -10,7 +10,11 @@ const db = require('./db.js')
 // 需要加在 server.use(router) 前
 server.use(jsonServer.rewriter({
   '/home/admin': '/home_admin',
-  '/home/teach': '/home_teach'
+  '/home/teach': '/home_teach',
+  '/detail/:id': '/teacher/:id',
+  '/detail/teacher/:id': '/teacher/:id',
+  '/detail/student/:id': '/student/:id',
+  '/detail/parent/:id': '/parent/:id',
 }))
 
 // Use router
