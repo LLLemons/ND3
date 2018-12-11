@@ -1,4 +1,6 @@
 import styled from "styled-components"
+import nullPicUrl from './../../statics/images/null.png'
+import avatarPicUrl from './../../statics/images/bg.png'
 
 export const Search = styled.div`
   position: absolute;
@@ -72,7 +74,15 @@ export const KindCard = styled.li`
   margin-right: 22px;
   margin-bottom: 22px;
 `
-export const KindAvatar = styled.img`
+export const TagList = styled.div`
+  height: 115px;
+	overflow: hidden;
+	position: relative;
+`
+export const KindAvatar = styled.img.attrs({
+  src: avatarPicUrl,
+  alt: '头像'
+})`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -89,4 +99,30 @@ export const MainTagItem = styled.li`
   padding: 5px;
   color: #fefefe;
   background-color: #f99d43;
+`
+export const FunctionList = styled.ul`
+  position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	padding: 7px 4px;
+	box-shadow: border-box;
+	background-color: rgba(255,255,255,.9);
+`
+export const FunctionTag = styled.div`
+  margin-right: 6px;
+	margin-bottom: 6px;
+	padding: 5px;
+	color: #fefefe;
+	background-color: #f99d43;
+`
+
+export const NullImg = styled.img.attrs({
+  src: nullPicUrl,
+  alt: '没有数据'
+})`
+  display: block;
+  margin: 0 auto;
 `
