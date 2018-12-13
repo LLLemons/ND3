@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
+import { Link ,BrowserRouter } from 'react-router-dom'
 import { actionCreators } from './store'
 import {
   SideBarWrapper,
@@ -17,6 +18,7 @@ class SideBar extends Component {
     this.state = {
       index: 2
     }
+    this.handleClickOnItem = this.handleClickOnItem.bind(this)
   }
 
   getTabItems() {
@@ -28,14 +30,25 @@ class SideBar extends Component {
     } = this.state
     return (
       list.map(item => (
-        <TabItem key={item.get('id')} className={index === item.get('id') && 'sideTab__item--current'}>
-          <TabLink title={item.get('title')}>
-            <TabIcon className={ this.changeIconName(item.get('id'))+' sprite' }></TabIcon>
-            <span>{item.get('title')}</span>
-          </TabLink>
-        </TabItem>
+        <BrowserRouter  key={item.get('id')}>
+          <Link to={`/management/${item.id}`}>
+            <TabItem data-index={item.get('id')} className={index === item.get('id') && 'sideTab__item--current'} onClick={this.handleClickOnItem}>
+              <TabLink title={item.get('title')}>
+                <TabIcon className={ this.changeIconName(item.get('id'))+' sprite' }></TabIcon>
+                <span>{item.get('title')}</span>
+              </TabLink>
+            </TabItem>
+          </Link>
+        </BrowserRouter>
       ))
     )
+  }
+
+  handleClickOnItem(e) {
+    const { index } = e.currentTarget.dataset
+    this.setState({
+      index: parseInt(index)
+    })
   }
 
   changeIconName(id) {

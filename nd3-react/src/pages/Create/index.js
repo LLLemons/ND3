@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux'
 import Select from './components/select'
-import { actionCreators } from './store'
+import apiServices from './../../services/api'
 import {
   FormWrapper,
   Title,
@@ -73,7 +73,7 @@ class Create extends Component {
     this.submitForm = this.submitForm.bind(this)
   }
 
-handleChange  (e) {
+  handleChange  (e) {
     const type = e.currentTarget.name
     let value = e.currentTarget.value
     this.setState({
@@ -124,19 +124,37 @@ handleChange  (e) {
       formData
     })
   }
-  componentWillMount() {
-  }
 
   /**
    * 提交表单
    */
   submitForm() {
     const { formData } = this.state
-    if (formData.schoolSection && formData.grade && formData.className) {
-      this.props.submitForm(formData)
-    } else {
+    if (!formData.schoolSection || !formData.grade || !formData.className) {
       alert('请完成所有必填项')
+      return
     }
+    let url = ''
+    switch (formData.type) {
+      case 0:
+        url = 'home/admin'
+        break
+      case 1:
+        url = 'home/teach'
+        break
+      default:
+        break
+    }
+    apiServices.postPosts(url,{
+      id: 10,
+      grade: formData.schoolSection+'2015级',
+      class: formData.grade,
+      header_teacher: '刘汇',
+      count: 300,
+      isHot: false
+    }).then(res => {
+      console.log(res);
+    })
   }
 
   render() {
@@ -180,7 +198,7 @@ handleChange  (e) {
               <Label className='fl'>类型</Label>
               <RadioList className='fl clearfix'>
                 <RadioItem className='fl'>
-                  <Radio id="radio__admin" value="0" type="radio" name="radio__type" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__admin" value="0" type="radio" name="radio__type" checked onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__admin">行政班</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
@@ -194,11 +212,11 @@ handleChange  (e) {
               <Label className='fl'>退出权限设置</Label>
               <RadioList className='fl clearfix'>
                 <RadioItem className='fl'>
-                  <Radio id="radio__allow" value="0" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__allow" value="0" checked type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel className='checked' htmlFor="radio__allow">允许退出</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
-                  <Radio id="radio__review" value="1" checked type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__review" value="1" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__review">通过班级管理员审核后退出</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
@@ -225,9 +243,6 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    submitForm() {
-      dispatch(actionCreators.submitForm())
-    }
   }
 }
 export default connect(mapState, mapDispatch)(Create)
