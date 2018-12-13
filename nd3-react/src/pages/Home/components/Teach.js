@@ -8,30 +8,33 @@ import { Link } from 'react-router-dom'
 class Teach extends Component {
   getList() {
     const { list } = this.props
+    if (!list.length) {
+      return
+    }
     return list.map(item => {
       return (
-        <Link to={`/detail/${item.get('id')}`}>
-          <CardItem className='card mgb-20 mgr-20 clearfix' key={item.get('id')}>
-            <CardHot className={item.get('isHot') ? 'sprite icon_hot' : 'sprite icon_hot show'}></CardHot>
+        <CardItem className='card mgb-20 mgr-20 clearfix' key={item.id}>
+          <Link to={`/detail/${item.id}`}>
+            <CardHot className={item.isHot ? 'sprite icon_hot' : 'sprite icon_hot show'}></CardHot>
             <div className='sprite icon_cover mgr-20 fl'></div>
             <dl className='lineheight24px col-333'>
-              <dt className="fw-bold">{item.get('grade')}</dt>
+              <dt className="fw-bold">{item.grade}</dt>
               <dd>
                 <span className="col-999">班级：</span>
-                <span>{item.get('class')}</span>
+                <span>{item.class}</span>
               </dd>
               <dd>
                 <span className="col-999">班主任：</span>
-                <span className="fw-bold">{item.get('header_teacher')}</span>
+                <span className="fw-bold">{item.header_teacher}</span>
               </dd>
               <dd>
                 <span className="col-999">学生：</span>
-                <span>{item.get('count')}人</span>
+                <span>{item.count}人</span>
               </dd>
             </dl>
             <CardTag>教学班</CardTag>
-          </CardItem>
-        </Link>
+          </Link>
+        </CardItem >
       )
     })
   }
@@ -54,7 +57,7 @@ class Teach extends Component {
 
 const mapState = (state) => {
   return {
-    list: state.getIn(['home', 'list'])
+    list: state.getIn(['home', 'list']).toJS()
   }
 }
 const mapDispatch = (dispatch) => {

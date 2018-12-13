@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux'
+import Select from './components/select'
+import { actionCreators } from './store'
 import {
   FormWrapper,
   Title,
@@ -8,10 +10,6 @@ import {
   Label,
   Input,
   Require,
-  Select,
-  SelectHead,
-  SelectList,
-  SelectItem,
   ErrorSpan,
   RadioList,
   RadioItem,
@@ -23,18 +21,59 @@ class Create extends Component {
   constructor(porps) {
     super(porps)
     this.state = {
-      school: '福建师范大学',
-      schoolSection: '',
-      grade: '',
-      className: '',
-      type: '',
-      permission: '允许退出',
+      formData: {
+        school: '福建师范大学',
+        schoolSection: '',
+        grade: '',
+        className: '',
+        type: 0,
+        permission: 0
+      },
       isError: false,
-      isShow: false
+      isShow: false,
+      schoolSectionList: [
+        {
+          id: 0,
+          value: '小学'
+        },
+        {
+          id: 1,
+          value: '初中'
+        },
+        {
+          id: 2,
+          value: '高中'
+        },
+        {
+          id: 3,
+          value: '大学'
+        }
+      ],
+      gradeSelect: [
+        {
+          id: 0,
+          value: '一年级'
+        },
+        {
+          id: 1,
+          value: '二年级'
+        },
+        {
+          id: 2,
+          value: '三年级'
+        }
+      ],
+      schoolSectiontTip: '请选择学段',
+      gradeTip: '请选择年级'
     }
+    this.handleBlurOnInputSchool = this.handleBlurOnInputSchool.bind(this)
+    this.handleBlurOnInputClass = this.handleBlurOnInputClass.bind(this)
+    this.schoolSectionSelect = this.schoolSectionSelect.bind(this)
+    this.gradeSelect = this.gradeSelect.bind(this)
+    this.submitForm = this.submitForm.bind(this)
   }
 
-  handleChange(e) {
+handleChange  (e) {
     const type = e.currentTarget.name
     let value = e.currentTarget.value
     this.setState({
@@ -45,39 +84,23 @@ class Create extends Component {
   handleBlurOnInputSchool(e) {
     const type = e.currentTarget.name
     const value = e.currentTarget.value
+    const { formData } = this.state
+    formData[type] = value
     this.setState({
-      [type]: value
+      formData
     })
-    var bool = this.isMatches(value)
-    console.log(bool)
-    bool ? this.setState({ isError: false }) : this.setState({ isError: true })
   }
 
   handleBlurOnInputClass(e) {
     const type = e.currentTarget.name
     const value = e.currentTarget.value
+    const { formData } = this.state
+    formData[type] = value
     this.setState({
-      [type]: value
+      formData
     })
     var bool = this.isMatches(value)
-    console.log(bool)
     bool ? this.setState({ isError: false }) : this.setState({ isError: true })
-  }
-
-  handleClickOnSelectHead() {
-    this.setState({
-      isShow: true
-    })
-  }
-
-  handleClickOnSelectList(e) {
-    const value = e.target.dataset.value
-    console.log(e.target)
-    console.log(value)
-    this.setState({
-      isShow: false,
-      schoolSection: value
-    })
   }
 
   // 匹配正则 不含 _ 和 %
@@ -86,11 +109,38 @@ class Create extends Component {
     return pattern.test(str);
   }
 
+  schoolSectionSelect(value) {
+    const { formData } = this.state
+    formData.schoolSection = value
+    this.setState({
+      formData
+    })
+  }
+
+  gradeSelect(value) {
+    const { formData } = this.state
+    formData.grade = value
+    this.setState({
+      formData
+    })
+  }
   componentWillMount() {
   }
 
-  render() {
+  /**
+   * 提交表单
+   */
+  submitForm() {
+    const { formData } = this.state
+    if (formData.schoolSection && formData.grade && formData.className) {
+      this.props.submitForm(formData)
+    } else {
+      alert('请完成所有必填项')
+    }
+  }
 
+  render() {
+    const { schoolSectionList, schoolSectiontTip, gradeSelect, gradeTip } = this.state
     return (
       <Fragment>
         <FormWrapper>
@@ -101,38 +151,28 @@ class Create extends Component {
             {/* 学校的名字 */}
             <FormItem className='clearfix'>
               <Label className='fl' htmlFor='school'>学校</Label>
-              <Input maxLength='80' id='school' name='school' type='text' placeholder='福建师范大学' onBlur={this.handleBlurOnInputSchool.bind(this)}></Input>
+              <Input maxLength='80' id='school' name='school' type='text' placeholder='福建师范大学' onBlur={this.handleBlurOnInputSchool}></Input>
             </FormItem>
             {/* 学段 */}
             <FormItem className='clearfix'>
               <Label className='fl'>
                 <Require>*</Require>学段
-                </Label>
-              <Select className='fl'>
-                <SelectHead className='down' onClick={this.handleClickOnSelectHead.bind(this)}>{this.state.schoolSection ? this.state.schoolSection : '请选择学段'}</SelectHead>
-                <SelectList className={this.state.isShow && 'show'} onMouseLeave={() => { this.setState({ isShow: false }) }} onClick={this.handleClickOnSelectList.bind(this)}>
-                  <SelectItem data-value='小学'>小学</SelectItem>
-                </SelectList>
-              </Select>
+              </Label>
+              <Select selectList={schoolSectionList} tipText={schoolSectiontTip} changeValue={this.schoolSectionSelect}></Select>
             </FormItem>
             {/* 年级 */}
             <FormItem className='clearfix'>
               <Label className='fl'>
                 <Require>*</Require>年级
-                </Label>
-              <Select className='fl'>
-                <SelectHead className='down'>请选择年级</SelectHead>
-                <SelectList>
-                  <SelectItem>小学</SelectItem>
-                </SelectList>
-              </Select>
+              </Label>
+              <Select selectList={gradeSelect} tipText={gradeTip} changeValue={this.gradeSelect}></Select>
             </FormItem>
             {/* 班级名 */}
             <FormItem className='clearfix'>
               <Label className='fl'>
                 <Require>*</Require>班级名
-                </Label>
-              <Input className='fl' maxLength='20' id='className' type='text' placeholder='请输入班级名称，限20个字符，不支持输入_和%' onBlur={this.handleBlurOnInputClass.bind(this)}></Input>
+              </Label>
+              <Input className='fl' maxLength='20' name='className' id='className' type='text' placeholder='请输入班级名称，限20个字符，不支持输入_和%' onBlur={this.handleBlurOnInputClass}></Input>
               <ErrorSpan className={this.state.isError ? 'fl show' : 'fl'}>不支持输入_和%</ErrorSpan>
             </FormItem>
             {/* 类型 */}
@@ -140,11 +180,11 @@ class Create extends Component {
               <Label className='fl'>类型</Label>
               <RadioList className='fl clearfix'>
                 <RadioItem className='fl'>
-                  <Radio id="radio__admin" value="1" type="radio" name="radio__type" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__admin" value="0" type="radio" name="radio__type" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__admin">行政班</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
-                  <Radio id="radio__teach" value="0" type="radio" name="radio__type" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__teach" value="1" type="radio" name="radio__type" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__teach">教学班</RadioLabel>
                 </RadioItem>
               </RadioList>
@@ -154,15 +194,15 @@ class Create extends Component {
               <Label className='fl'>退出权限设置</Label>
               <RadioList className='fl clearfix'>
                 <RadioItem className='fl'>
-                  <Radio id="radio__allow" value="允许退出" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__allow" value="0" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel className='checked' htmlFor="radio__allow">允许退出</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
-                  <Radio id="radio__review" value="通过班级管理员审核后退出" checked type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__review" value="1" checked type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__review">通过班级管理员审核后退出</RadioLabel>
                 </RadioItem>
                 <RadioItem className='fl'>
-                  <Radio id="radio__forbidden" value="禁止退出" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
+                  <Radio id="radio__forbidden" value="2" type="radio" name="radio__permission" onChange={this.handleChange.bind(this)}></Radio>
                   <RadioLabel htmlFor="radio__forbidden">禁止退出</RadioLabel>
                 </RadioItem>
               </RadioList>
@@ -170,7 +210,7 @@ class Create extends Component {
             {/* 提交 */}
             <FormItem>
               <Label className='fl'>&nbsp;</Label>
-              <div className="button button-submit fl">提交</div>
+              <div className="button button-submit fl" onClick={this.submitForm}>提交</div>
             </FormItem>
           </Form>
         </FormWrapper>
@@ -185,7 +225,9 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-
+    submitForm() {
+      dispatch(actionCreators.submitForm())
+    }
   }
 }
 export default connect(mapState, mapDispatch)(Create)
