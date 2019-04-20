@@ -95,10 +95,10 @@ $(function () {
         $(inputObj).removeClass('error')
         $('.name__error').hide()
       }
-    }else {
-      $(inputObj).addClass('error')
-      $('.name__error').show()
+      return 
     }
+	  $(inputObj).addClass('error')
+	  $('.name__error').show()
   }
 
   /**
